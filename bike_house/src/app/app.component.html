@@ -1,0 +1,33 @@
+<header>
+    <nav>
+        <div class="logo">
+            <h1 style="font-size: 20px;"><b>Bike World</b></h1>
+        </div>
+        <div>
+        <ul>
+            <li><a routerLink="content-main">Home</a></li>
+            <li><a routerLink="/bike">Bikes</a></li>
+            <li *ngIf="authServ.roleCourant=='ADMIN'"><a routerLink="/users">Users</a></li>
+            <li *ngIf="authServ.roleCourant=='ADMIN'"><a routerLink="/Dashboard">Dashboard</a></li>
+            <li><a href="">About Us</a></li>
+            <li><a href="">Contact</a></li>
+        </ul>
+    </div>
+        <div class="nav-buttons">
+            <a routerLink="/sell" class="btn sell-bike" *ngIf="authServ.roleCourant=='ADMIN'">Insert Bike</a>
+            <a routerLink="/search-bike" class="btn buy-bike" *ngIf="authServ.isConnected">Search Bike</a>
+            <a routerLink="account" class="btn sign-in" *ngIf="authServ.isConnected" >{{authServ.userCourant}}</a>
+            <a (click)="disconnect()" class="btn sign-in" *ngIf="authServ.isConnected" >Log Out</a>
+            <a routerLink="/connect" class="btn sign-in" *ngIf="authServ.isConnected==false" >Sign In</a>
+            <a routerLink="/sign-in" class="btn sign-in" *ngIf="authServ.isConnected==false" >Create Account</a>
+
+        </div>
+    </nav>
+</header>
+<router-outlet></router-outlet>
+<footer>
+    <div class="footer-content">
+            <h1>Bike World</h1>
+        <p>&copy; 2023 Bike World</p>
+    </div>
+</footer>

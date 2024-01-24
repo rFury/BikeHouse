@@ -1,0 +1,65 @@
+
+    <section class="bike-listing-form">
+        <h2>List Your Bike for Sale</h2>
+        <form>
+            <label for="bike_name">Bike Name:</label>
+            <input [(ngModel)]="newBike.bikeName" type="text" id="bike_name" name="bike_name" required>
+
+            <label for="description">Description:</label>
+            <textarea [(ngModel)]="newBike.description" id="description" name="description" rows="4" required></textarea>
+
+            <label for="price">Price:</label>
+            <input [(ngModel)]="newBike.price" type="text" id="price" name="price" required>
+
+            <label for="contact_info">Contact Information:</label>
+            <textarea [(ngModel)]="newBike.contactInfo" id="contact_info" name="contact_info" rows="4" required></textarea>
+
+            <label for="condition">Condition:</label>
+            <select [(ngModel)]="newBike.condition" id="condition" name="condition" (ngModelChange)="newBike.condition=$event" required>
+                <option value="new">New</option>
+                <option value="used">Used</option>
+            </select>
+            <div class="container">
+                <h2>Select Bike Features</h2>
+                <label>Features:</label><br>
+            
+                <label for="featureSuspension">
+                    <input type="checkbox" id="featureSuspension" name="feature" value="Suspension"  (change)="updateSelectedFeatures($event)">
+                    Suspension
+                </label><br>
+            
+                <label for="featureGearSystem">
+                    <input type="checkbox" id="featureGearSystem" name="feature" value="Gear System"  (change)="updateSelectedFeatures($event)">
+                    Gear System
+                </label><br>
+            
+                <label for="featureFrameMaterial">
+                    <input type="checkbox" id="featureFrameMaterial" name="feature" value="Frame Material"  (change)="updateSelectedFeatures($event)">
+                    Frame Material
+                </label><br>
+            
+                <label for="featureBrakeType">
+                    <input type="checkbox" id="featureBrakeType" name="feature" value="Brake Type"  (change)="updateSelectedFeatures($event)">
+                    Brake Type
+                </label><br>
+            </div>
+            
+
+            <label for="bike_type">Bike Type:</label>
+            <select [(ngModel)]="newBike.bikeType" id="bike_type" name="bike_type" [(ngModel)]="id" required>
+                <option *ngFor="let type of bikeType" [value]="type.id">{{ type.name }}</option>
+            </select>
+            
+
+            <label for="frame_size">Frame Size (cm):</label>
+            <input [(ngModel)]="newBike.frameSize" type="number" id="frame_size" name="frame_size" required>
+
+            <label for="year">Manufacturing Year:</label>
+            <input [(ngModel)]="newBike.year" type="number" id="year" name="year" required>
+
+            <label for="location">Location:</label>
+            <input [(ngModel)]="newBike.location" type="text" id="location" name="location" required>
+
+            <button (click)="ajouterBike()" type="submit" >Submit Listing</button>
+        </form>
+    </section>

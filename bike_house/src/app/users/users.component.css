@@ -1,0 +1,64 @@
+.box
+{
+  display: flex;
+}
+.xd {
+  max-width: 100px;
+  max-height: 100px;
+  display: block;
+  margin: 0 auto;
+}
+
+.bike-list {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  /* Style the table */
+  .bike-table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .bike-table th, .bike-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .bike-table th {
+    background-color: #f0f0f0;
+    font-weight: bold;
+  }
+  /*prompt*/
+  /* delete-bike-dialog.component.css */
+:host {
+  display: block;
+  font-family: Arial, sans-serif;
+}
+
+.mat-dialog-container {
+  background-color: #fff; /* Dialog background color */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Add a slight shadow */
+}
+
+h2 {
+  margin-top: 0;
+  color: #333; /* Title color */
+}
+
+p {
+  margin-bottom: 10px;
+}
+
+.mat-dialog-actions {
+  justify-content: flex-end; /* Align buttons to the right */
+  margin-top: 20px;
+}
+
+button {
+  margin-left: 8px;
+}

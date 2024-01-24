@@ -1,0 +1,55 @@
+/* Your existing CSS styles */
+
+.bike-listing-form {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    margin-top: 20px;
+}
+
+.bike-listing-form h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.bike-listing-form label {
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+.bike-listing-form input[type="text"],
+.bike-listing-form input[type="number"],
+.bike-listing-form select,
+.bike-listing-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.bike-listing-form select {
+    width: 100%;
+}
+
+.bike-listing-form input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.bike-listing-form button {
+    background-color: #f00;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Add more specific styling as needed */

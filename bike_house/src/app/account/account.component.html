@@ -1,0 +1,107 @@
+<br>
+<br>
+<br>
+<div class="bike-details">
+<h1>Account</h1>
+<img src='../../assets/Img/account.avif' alt='' class='bike-image' style='width: 25%;'><br>
+<h3>{{User.UserName}}</h3>
+<div>
+<ng-container *ngIf="AuthServ.roleCourant=='AGENT'" >
+  <div class="input-group mb-3">
+    <span class="input-group-text" id="basic-addon1">@</span>
+    <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" [value]="User.UserName" readonly>
+  </div>
+  
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" [value]="User.UserEmail" readonly>
+    <span class="input-group-text" id="basic-addon2">@Email.com</span>
+  </div>
+  
+  <div class="input-group mb-3">
+    <span class="input-group-text">$</span>
+    <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" [value]="User.UserBalance" readonly>
+    <span class="input-group-text">.000</span>
+  </div>
+  
+  <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Username" aria-label="Username" [value]="User.UserAdress" readonly>
+    <span class="input-group-text">+216</span>
+    <input type="text" class="form-control" placeholder="Server" aria-label="Server" [value]="User.UserNumber"  readonly>
+  </div>
+  <br>
+  ORDERS
+  <span aria-hidden="true"><hr></span>
+  <div class="Orders">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Order Date</th>
+          <th scope="col">Order Number</th>
+          <th scope="col">Bike</th>
+          <th scope="col">Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of Orders">
+          <th scope="row">{{item.DateOfOrder}}</th>
+          <td>{{item.OrderNumber}}</td>
+          <td>{{this.getBikeById(item.Bike)[0].Brand}} {{this.getBikeById(item.Bike)[0].Name}}</td>
+          <td><button class="details-button" (click)="openModal(myModal,id.value)">...</button></td>
+          <input type="number" name="Id" value="{{item.Bike}}" readonly hidden #id>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <ng-template #myModal>
+    <div class="modal-header">
+      <h4 class="modal-title">Bike Details :</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="mb-3 row">
+        <div class="col-sm-10">
+          <img src="{{SearchedBike.Picture_File_Name}}" alt="{{SearchedBike.Name}}" class="Detail-img">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Bike :</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Name}}">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Brand :</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Brand}}">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Type :</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Type}}">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Year :</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Year}}">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Price :</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="$ {{SearchedBike.Price}}">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">More :</label>
+        <div class="col-sm-10">
+          <textarea class="form-control custom-textarea"  name="Description" id="staticEmail" cols="30" rows="5">{{SearchedBike.Description}}</textarea>
+        </div>
+      </div>
+  
+    </div>
+  </ng-template>
+<br>

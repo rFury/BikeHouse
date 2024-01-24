@@ -1,0 +1,26 @@
+<br>
+<br>
+<br>    
+<section class="create-account-form">
+    <h2>Create Account</h2>
+    <form>
+        <label for="new-username">Username:</label>
+        <input [(ngModel)]="user.UserName" type="text" id="new-username" name="new-username" required>
+
+        <label for="email">Email:</label>
+        <input [(ngModel)]="user.UserEmail" type="email" id="email" name="email" required>
+
+        <label for="pn">Phone Number:</label>
+        <input [(ngModel)]="user.UserNumber" type="number" id="pn" name="number" required>
+
+        <label for="adress">Adress:</label>
+        <input [(ngModel)]="user.UserAdress" type="text" id="adress" name="adress" required>
+
+        <label for="new-password">Password:</label>
+        <input (input)="Verif()" [(ngModel)]="this.pw" type="password" id="new-password" name="new-password" required>
+
+        <label for="confirm-password">Confirm Password:</label>
+        <input (input)="Verif()" [ngClass]="passwordConfirmationClass" [(ngModel)]="this.C_pw" type="password" id="confirm-password" name="confirm-password" required>
+        <button type="submit" (click)="CreateUser()" id="b1">Create Account</button>
+    </form>
+</section>

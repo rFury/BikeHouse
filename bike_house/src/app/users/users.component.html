@@ -1,0 +1,39 @@
+<div class="bike-list">
+    <h2>User Listings</h2>
+    <table class="bike-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Telephone</th>
+          <th>Balance</th>
+          <th>Address</th>
+          <th>Password</th>
+          <th>Role</th>
+          <th *ngIf="AuthServ.roleCourant=='ADMIN'">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of Users">
+            <ng-container *ngIf="user.role=='AGENT'">
+          <td>{{ user.nom }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.tel }}</td>
+          <td *ngIf="user.balance!=null" style="color:green">${{ user.balance }}</td>
+          <td *ngIf="user.balance==null" style="color:red">Out of Balance</td>
+          <td>{{ user.adresse }}</td>
+          <td>{{ user.mot2pass }}</td>
+          <td>{{ user.role }}</td>
+          <td *ngIf="AuthServ.roleCourant == 'ADMIN'">
+            <div class="box">
+              <a (click)="SuppUser(user)" >
+                <img src="../../assets/Img/delete.png" alt="delete" height="32" width="32">
+              </a>
+            </div>
+          </td>
+        </ng-container>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

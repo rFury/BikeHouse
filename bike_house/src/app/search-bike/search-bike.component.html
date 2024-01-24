@@ -1,0 +1,131 @@
+<br>
+<br>
+<br>
+<div class="ALL">
+  <div class="Filters">
+    <form>
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingInput" placeholder="Bike Name" name="Name" [(ngModel)]="X.Name" >
+      <label for="floatingInput">Bike Name :</label>
+    </div>
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingTextInput" placeholder="Production Year" name="Year" [(ngModel)]="X.Year">
+      <label for="floatingTextInput">Production Year :</label>
+    </div>
+    <div class="form-floating">
+      <input type="number" class="form-control" id="floatingTextInput" placeholder="Production Year" name="Price" [(ngModel)]="X.Price" >
+      <label for="floatingTextInput">Bike Pirce :</label>
+    </div>
+    <div class="form-floating">
+      <select name="Type" id="floatingSelect" class="form-select" aria-label="Floating label select example" [(ngModel)]="X.Type" >
+        <option value="" selected disabled>Choose Type :</option>
+        <option value="Dirt Bike">Dirt Bike</option>
+        <option value="Sport Bike">Sport Bike</option>
+        <option value="HyperSport Bike">HyperSport Bike</option>
+        <option value="Adventure Bike">Adventure Bike</option>
+        <option value="Sports Touring Bike">Sports Touring Bike</option>
+        <option value="Track Bike">Track Bike</option>
+      </select>
+      <label for="floatingSelect">Bike Type :</label>
+    </div>
+    <div  class="form-floating">
+      <select name="Brand" id="Brand" class="form-select" [(ngModel)]="X.Brand" >
+        <option value="" selected disabled>Choose Brand :</option>
+        <option value="BMW">BMW</option>
+        <option value="Kawasaki">KAWASAKI</option>
+        <option value="Yamaha">YAMAHA</option>
+        <option value="Honda">HONDA</option>
+        <option value="Husqravana">HUSQVARNA</option>
+      </select>
+      <label for="Brand">Bike Brand :</label>
+  </div>
+  <div class="buttons">
+    <button class="btn sign-in" type="reset">Reset</button>
+    <button class="btn sign-in" type="submit" (click)="SearchBike()">Search</button>
+  </div>
+  </form>
+  </div>
+  <div class="Bikes">
+      <ng-template #myModalE>
+        <div class="modal-header" style="display: flex;justify-content: space-between;">
+          <h4 class="modal-title" style="color:red;">Not enough Money !! </h4>
+          <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()" style="border-radius: 5px;background-color:#333;border:0px">
+            <span aria-hidden="true" style="color: white;">&times;</span>
+          </button>
+        </div>
+      </ng-template>
+    <div class="empty" *ngIf="Bikes.length==0">
+      <h1>No Results</h1>
+    </div>
+    <section class="featured-bikes" *ngIf="Bikes.length>0">
+      <div *ngFor="let item of Bikes" class="bike-card">
+          <img src="{{item.Picture_File_Name}}" alt="Mountain Bike">
+          <h4>{{item.Name}}</h4>
+          <p style="font-size: small;"> {{item.Type}} {{item.Brand}}:{{item.Name}} {{item.Year}} </p>
+          <span class="price">${{item.Price}}</span>
+          <div class="buttons-container">
+            <button class="details-button" type="button" (click)="openModal(myModal,id.value)">About</button>
+            <button class="order-button" *ngIf="item.Status=='On Sale'" (click)="buyBike(id.value,myModalE)" >Order</button>
+            <button class="order-button-sold" *ngIf="item.Status=='Sold'" disabled>{{item.Status}}</button>
+            <button class="order-button-coming" *ngIf="item.Status=='Coming Soon'" disabled>{{item.Status}}</button>
+          </div>
+          <input type="number" name="Id" value="{{item.BikeId}}" readonly hidden #id>
+      </div>
+    </section>
+  </div>
+</div>
+<ng-template #myModal>
+  <div class="modal-header">
+    <h4 class="modal-title">Bike Details :</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="mb-3 row">
+      <div class="col-sm-10">
+        <img src="{{SearchedBike.Picture_File_Name}}" alt="{{SearchedBike.Name}}" class="Detail-img">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Bike :</label>
+      <div class="col-sm-10">
+        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Name}}">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Brand :</label>
+      <div class="col-sm-10">
+        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Brand}}">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Type :</label>
+      <div class="col-sm-10">
+        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Type}}">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Year :</label>
+      <div class="col-sm-10">
+        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Year}}">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Price :</label>
+      <div class="col-sm-10">
+        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="$ {{SearchedBike.Price}}">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">More :</label>
+      <div class="col-sm-10">
+        <textarea class="form-control custom-textarea"  name="Description" id="staticEmail" cols="30" rows="5">{{SearchedBike.Description}}</textarea>
+      </div>
+    </div>
+
+  </div>
+</ng-template>
+<br>
+<br>
+<br>
