@@ -33,5 +33,8 @@ export class UsersService {
             return null;
         }
       }
+    getUsers():Observable<any[]>{
+        return this.http.get<any[]>(this.apiUrl);
+    }
 
 }

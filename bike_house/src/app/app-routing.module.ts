@@ -11,6 +11,7 @@ import { AccountComponent } from './account/account.component';
 import { UsersComponent } from './users/users.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { AccessGuard } from './guard/access.guard';
+import { AdminComponent } from './admin/admin.component';
 const routes: Routes = [
 { path: '', redirectTo: '/content-main', pathMatch: 'full' },
 {path: "content-main", component : ContentMainComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
 {path:"Dashboard",component:DashboardComponent},
 {path:"account",component:AccountComponent},
 {path:"users",component:UsersComponent,canActivate:[AccessGuard]},
-{path:"forbidden",component:ForbiddenComponent}
+{path:"forbidden",component:ForbiddenComponent},
+{path:"Admin",component:AdminComponent},
 ];
 
 @NgModule({

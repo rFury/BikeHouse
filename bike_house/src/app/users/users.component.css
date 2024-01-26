@@ -62,3 +62,13 @@ p {
 button {
   margin-left: 8px;
 }
+
+.details-button {
+  background-color: #f00; /* Adjust as needed */
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  margin-right: 10px; /* Adjust spacing between buttons as needed */
+  cursor: pointer;
+}

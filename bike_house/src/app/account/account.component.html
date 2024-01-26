@@ -6,6 +6,21 @@
 <img src='../../assets/Img/account.avif' alt='' class='bike-image' style='width: 25%;'><br>
 <h3>{{User.UserName}}</h3>
 <div>
+  <ng-container *ngIf="AuthServ.roleCourant=='ADMIN'">
+    <br>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">@</span>
+      <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" [value]="User.UserName" readonly>
+    </div>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" [value]="User.UserEmail" readonly>
+      <span class="input-group-text" id="basic-addon2">@Email.com</span>
+    </div>
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2" [value]="AuthServ.roleCourant" readonly>
+      <span class="input-group-text" id="basic-addon2">Admin Grade</span>
+    </div>
+  </ng-container>
 <ng-container *ngIf="AuthServ.roleCourant=='AGENT'" >
   <div class="input-group mb-3">
     <span class="input-group-text" id="basic-addon1">@</span>

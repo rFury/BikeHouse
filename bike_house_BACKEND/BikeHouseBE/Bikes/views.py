@@ -33,6 +33,7 @@ def FindBikes(request):
     BikeBrand = request.query_params.get('BikeBrand', '')
     BikePrice = request.query_params.get('BikePrice', None)
     BikeType = request.query_params.get('BikeType', '')
+    BikeStatus = request.query_params.get('BikeStatus','')
 
     filters = {}
     if is_not_empty(BikeName):
@@ -45,6 +46,8 @@ def FindBikes(request):
         filters['Year'] = BikeYear
     if is_not_empty(BikePrice):
         filters['Price__gte'] = BikePrice
+    if is_not_empty(BikeStatus):
+        filters['Status'] = BikeStatus
         
         
     BikeX = Bike.objects.filter(**filters).order_by('-Price')

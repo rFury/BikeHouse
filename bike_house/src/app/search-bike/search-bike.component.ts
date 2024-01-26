@@ -12,15 +12,47 @@ import { Router } from '@angular/router';
   styleUrls: ['./search-bike.component.css']
 })
 export class SearchBikeComponent {
+  readonly:boolean = true;
   erreur:boolean = false;
   User:UserModel = this.AuthServ.getUserCourant();
   SearchedBike !: Bike;
   modalRef!: BsModalRef;
   Bikes:Bike[] = [];
   X:Bike=new Bike();
-  constructor( private route: Router ,private bikeServ: bikeService,private modalService: BsModalService,private AuthServ: AuthService,private UserServ: UsersService) {
+  constructor( private route: Router ,private bikeServ: bikeService,private modalService: BsModalService,public AuthServ: AuthService,private UserServ: UsersService) {
     this.ListBikes();
   }
+
+  delete(id: string){
+    let rep = confirm("Are you sure you want to delete this Bike?");
+    if (rep) {
+      this.bikeServ.deleteBike(parseInt(id)).subscribe((data) => {
+        console.log(data);
+        this.ListBikes();
+      }, (error) => {
+        console.log(error.message);
+      });
+    }
+  }
+
+
+  updateBike(){
+    let rep = confirm("Are you sure you want to update this Bike?");
+    if(rep) {
+      this.bikeServ.updateBike(this.SearchedBike).subscribe(
+        (reponse)=>{
+          console.log(reponse);
+          this.ListBikes();
+          this.modalRef.hide();
+        },
+        (error)=>{
+          console.log(error.message);
+        }
+      );
+    }
+  }
+
+
   buyBike(id: string,template: TemplateRef<any>) {
     this.bikeServ.getBikeById(id).subscribe(
       (response) => {
@@ -82,6 +114,7 @@ export class SearchBikeComponent {
     this.bikeServ.getBikes().subscribe(
       (Response)=> {
         this.Bikes = Response;
+        this.Bikes.sort((a, b) => Number(b.Price) - Number(a.Price));
         /*console.log(JSON.stringify(this.Bikes))*/;
       },
       (error)=> {
@@ -94,7 +127,9 @@ export class SearchBikeComponent {
       BikeYear:this.X.Year,
       BikeBrand:this.X.Brand,
       BikeType:this.X.Type,
-      BikePrice:this.X.Price};
+      BikePrice:this.X.Price,
+      BikeStatus:this.X.Status
+    };
       this.bikeServ.SearchBikes(params).subscribe(
         (response)=> {
           this.Bikes=response
@@ -114,7 +149,13 @@ export class SearchBikeComponent {
   initiateDivRemoval() {
     this.removeDivAfterDelay();
   }
+  readonlyData(){
+    if(this.AuthServ.roleCourant=='ADMIN'){
+      this.readonly=false;
+    }
+  }
   ngOnInit() {
     this.initiateDivRemoval();
+    this.readonlyData();
   };
 }

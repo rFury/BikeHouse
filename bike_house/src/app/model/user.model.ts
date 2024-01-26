@@ -6,5 +6,5 @@ export class UserModel {
     UserAdress?: string;
     UserBalance?: Number;
     UserPassword?: string;
-    ordered_bikes?:String[]=[];
+    ordered_bikes:String[]=[];
 }

@@ -13,6 +13,7 @@ class Bike(models.Model):
         ('Sport Bike', 'Sport Bike'),
         ('Track Bike', 'Track Bike'),
         ('HyperSport Bike', 'HyperSport Bike'),
+        ('Naked Bike', 'Naked Bike'),
     ]
 
     BikeId = models.AutoField(primary_key=True)

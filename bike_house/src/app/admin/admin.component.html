@@ -1,0 +1,35 @@
+<br>
+<br>
+<div class="center-container">
+    <div class="container">
+      <div class="card shadow">
+        <div class="card-body">
+          <h1>Connexion Admin</h1>
+          <div class="container mt-5">
+            <div *ngIf="erreur==true" class="text-err">
+                <p>{{erreurType}} is Wrong ! Verify your {{erreurType}} !</p>
+                <br>
+               </div>
+            <div class="row justify-content-md-center">
+              <div class="col-md-6">
+                <form>
+                  <div class="form-group">
+                    <label for="login">Login</label>
+                    <input type="text" name="login" class="form-control" [(ngModel)]="Admin.AdminEmail" placeholder="Enter Name..." minlength="5"  (change)="reset()" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="password">Mot de passe</label>
+                    <input type="password" name="password" [(ngModel)]="Admin.AdminPassword" class="form-control" minlength="6" placeholder="Enter password..."  (change)="reset()" required>
+                  </div>
+                  <div class="text-center">
+                    <button type="submit" class="btn" (click)="connected()">Submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

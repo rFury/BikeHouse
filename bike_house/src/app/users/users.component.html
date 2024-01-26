@@ -1,39 +1,66 @@
-<div class="bike-list">
-    <h2>User Listings</h2>
-    <table class="bike-table">
-      <thead>
+<br>
+<br>
+<br>
+<br>
+<div>
+    <table class="table">
+        <thead>
         <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Telephone</th>
-          <th>Balance</th>
-          <th>Address</th>
-          <th>Password</th>
-          <th>Role</th>
-          <th *ngIf="AuthServ.roleCourant=='ADMIN'">Actions</th>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Adress</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Balance</th>
+            <th scope="col">Password</th>
+            <th scope="col">Orders</th>
         </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let user of Users">
-            <ng-container *ngIf="user.role=='AGENT'">
-          <td>{{ user.nom }}</td>
-          <td>{{ user.email }}</td>
-          <td>{{ user.tel }}</td>
-          <td *ngIf="user.balance!=null" style="color:green">${{ user.balance }}</td>
-          <td *ngIf="user.balance==null" style="color:red">Out of Balance</td>
-          <td>{{ user.adresse }}</td>
-          <td>{{ user.mot2pass }}</td>
-          <td>{{ user.role }}</td>
-          <td *ngIf="AuthServ.roleCourant == 'ADMIN'">
-            <div class="box">
-              <a (click)="SuppUser(user)" >
-                <img src="../../assets/Img/delete.png" alt="delete" height="32" width="32">
-              </a>
-            </div>
-          </td>
-        </ng-container>
+        </thead>
+        <tbody class="table-group-divider">
+        <tr *ngFor="let item of Users">
+            <th scope="row">{{item.UserId}}</th>
+            <td>{{item.UserName}}</td>
+            <td>{{item.UserEmail}}</td>
+            <td>{{item.UserAdress}}</td>
+            <td>{{item.UserNumber}}</td>
+            <td>{{item.UserBalance}}</td>
+            <td>{{item.UserPassword}}</td>
+            <td *ngIf="item.ordered_bikes.length==0" style="color: red;">No Orders !</td>
+            <td *ngIf="item.ordered_bikes.length>0">
+                <button class="details-button" (click)="openModal(myModal,item.ordered_bikes)">...</button>
+            </td>
         </tr>
-      </tbody>
+        </tbody>
     </table>
-  </div>
-  
+    <ng-template #myModal>
+        <div class="modal-header">
+          <h4 class="modal-title">User Orders :</h4>
+          <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="Orders">
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col">Order Date</th>
+                      <th scope="col">Order Number</th>
+                      <th scope="col">Bike</th>
+                      <th scope="col">User Id</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let item of Orders">
+                      <th scope="row">{{item.DateOfOrder}}</th>
+                      <td>{{item.OrderNumber}}</td>
+                      <td>{{item.Bike}}</td>
+                      <td>{{item.UserId}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+      
+        </div>
+      </ng-template>
+</div>

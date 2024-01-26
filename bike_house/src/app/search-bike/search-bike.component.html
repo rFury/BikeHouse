@@ -36,8 +36,21 @@
         <option value="Yamaha">YAMAHA</option>
         <option value="Honda">HONDA</option>
         <option value="Husqravana">HUSQVARNA</option>
+        <option value="Suzuki">SUZUKI</option>
+        <option value="Duccati">DUCCATI</option>
+
       </select>
       <label for="Brand">Bike Brand :</label>
+  </div>
+  <div class="form-floating" *ngIf="AuthServ.roleCourant=='ADMIN'">
+    <select name="Brand" id="Brand" class="form-select" [(ngModel)]="X.Status" >
+      <option value="" selected disabled>Choose Status :</option>
+      <option value="On Sale">On Sale</option>
+      <option value="Sold">Sold</option>
+      <option value="Coming Soon">Coming Soon</option>
+
+    </select>
+    <label for="Brand">Bike Status :</label>
   </div>
   <div class="buttons">
     <button class="btn sign-in" type="reset">Reset</button>
@@ -45,6 +58,7 @@
   </div>
   </form>
   </div>
+  
   <div class="Bikes">
       <ng-template #myModalE>
         <div class="modal-header" style="display: flex;justify-content: space-between;">
@@ -61,15 +75,21 @@
       <div *ngFor="let item of Bikes" class="bike-card">
           <img src="{{item.Picture_File_Name}}" alt="Mountain Bike">
           <h4>{{item.Name}}</h4>
-          <p style="font-size: small;"> {{item.Type}} {{item.Brand}}:{{item.Name}} {{item.Year}} </p>
+          <p style="font-size: small;"> {{item.Type}}</p><p style="font-size: small;">{{item.Brand}}:{{item.Name}} {{item.Year}} </p>
           <span class="price">${{item.Price}}</span>
           <div class="buttons-container">
+            <ng-container *ngIf="this.AuthServ.roleCourant=='AGENT'">
             <button class="details-button" type="button" (click)="openModal(myModal,id.value)">About</button>
             <button class="order-button" *ngIf="item.Status=='On Sale'" (click)="buyBike(id.value,myModalE)" >Order</button>
             <button class="order-button-sold" *ngIf="item.Status=='Sold'" disabled>{{item.Status}}</button>
             <button class="order-button-coming" *ngIf="item.Status=='Coming Soon'" disabled>{{item.Status}}</button>
+          </ng-container>
+          <ng-container *ngIf="this.AuthServ.roleCourant=='ADMIN'">
+            <button class="details-button" type="button" (click)="openModal(myModal,id.value)">Update</button>
+            <button class="order-button" (click)="delete(id.value)" >Delete</button>
+          </ng-container>
           </div>
-          <input type="number" name="Id" value="{{item.BikeId}}" readonly hidden #id>
+          <input type="number" name="Id" value="{{item.BikeId}}" [readonly]="readonly" hidden #id>
       </div>
     </section>
   </div>
@@ -82,6 +102,7 @@
     </button>
   </div>
   <div class="modal-body">
+    <form >
     <div class="mb-3 row">
       <div class="col-sm-10">
         <img src="{{SearchedBike.Picture_File_Name}}" alt="{{SearchedBike.Name}}" class="Detail-img">
@@ -90,40 +111,41 @@
     <div class="mb-3 row">
       <label for="staticEmail" class="col-sm-2 col-form-label">Bike :</label>
       <div class="col-sm-10">
-        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Name}}">
+        <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Name}}" name="name" [(ngModel)]="SearchedBike.Name" required>
       </div>
     </div>
     <div class="mb-3 row">
       <label for="staticEmail" class="col-sm-2 col-form-label">Brand :</label>
       <div class="col-sm-10">
-        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Brand}}">
+        <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Brand}}" name="brand" [(ngModel)]="SearchedBike.Brand" required>
       </div>
     </div>
     <div class="mb-3 row">
       <label for="staticEmail" class="col-sm-2 col-form-label">Type :</label>
       <div class="col-sm-10">
-        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Type}}">
+        <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Type}}" name="type" [(ngModel)]="SearchedBike.Type" required>
       </div>
     </div>
     <div class="mb-3 row">
       <label for="staticEmail" class="col-sm-2 col-form-label">Year :</label>
       <div class="col-sm-10">
-        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Year}}">
+        <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="{{SearchedBike.Year}}" name="year" [(ngModel)]="SearchedBike.Year" required>
       </div>
     </div>
     <div class="mb-3 row">
       <label for="staticEmail" class="col-sm-2 col-form-label">Price :</label>
       <div class="col-sm-10">
-        <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="$ {{SearchedBike.Price}}">
+        <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="$ {{SearchedBike.Price}}" name="price" [(ngModel)]="SearchedBike.Price" required>
       </div>
     </div>
     <div class="mb-3 row">
       <label for="staticEmail" class="col-sm-2 col-form-label">More :</label>
       <div class="col-sm-10">
-        <textarea class="form-control custom-textarea"  name="Description" id="staticEmail" cols="30" rows="5">{{SearchedBike.Description}}</textarea>
+        <textarea class="form-control custom-textarea"  name="Description" id="staticEmail" cols="30" rows="5" [(ngModel)]="SearchedBike.Description" required>{{SearchedBike.Description}}</textarea>
       </div>
     </div>
-
+    <button type="submit" class="order-button-coming" (click)="updateBike()">Update</button>
+  </form>
   </div>
 </ng-template>
 <br>

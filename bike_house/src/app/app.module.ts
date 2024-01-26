@@ -8,7 +8,6 @@ import { FormsModule } from '@angular/forms';
 import { AccountComponent } from './account/account.component';
 import { SellComponent } from './sell/sell.component';
 import { UpdateBikeComponent } from './update-bike/update-bike.component';
-import { ParamMap } from '@angular/router';
 import { SearchBikeComponent } from './search-bike/search-bike.component';
 import { ConnectComponent } from './connect/connect.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -18,6 +17,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { AdminComponent } from './admin/admin.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +31,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     DashboardComponent,
     UsersComponent,
     ForbiddenComponent,
+    AdminComponent,
 
 
   ],

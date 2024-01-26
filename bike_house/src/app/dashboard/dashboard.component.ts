@@ -13,6 +13,5 @@ export class DashboardComponent {
   constructor(private bikeServ : bikeService,private authS: AuthService) {
     this.nbBikes = this.bikeServ.getNbBikes();
     this.AVGprice = this.bikeServ.getAVGpriceBike();
-    this.nbUsers = this.authS.calculNbUsers();
     }
 }

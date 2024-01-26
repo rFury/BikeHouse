@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Route, Router, RouterLink } from '@angular/router';
-import { Compte } from '../model/compte.model';
 import { UserModel } from '../model/user.model';
 @Injectable({
   providedIn: 'root'
@@ -8,7 +7,6 @@ import { UserModel } from '../model/user.model';
 export class AuthService {
   private readonly STORAGE_KEY = 'myAppUserDataKey';
   User !:UserModel;
-  users!: Compte[];
   userCourant!: string;
   roleCourant!: string;
   isConnected!: boolean;
@@ -31,29 +29,7 @@ export class AuthService {
     testerAdmin(): boolean {
       return this.roleCourant === 'ADMIN';
     }
-  
-    calculNbUsers(): number {
-      let nb = 0 ;
-      for (let index = 0; index < this.users.length; index++) {
-        if (this.users[index].role=="AGENT"){
-          nb++;
-        }
-      }
-      return nb;
-    }
-    deleteUserListing(User: Compte) {
-      const index = this.users.indexOf(User);
-      if (index !== -1) {
-        this.users.splice(index, 1);
-      }
-    }
-    getUserListings(){
-      return this.users;
-    }
-    AddUser(c:Compte){
-      this.users.push(c);
-      console.log(`User added: ${c.nom}`);
-    }
+
     saveData(): void {
       const data = {
         User: this.User,
