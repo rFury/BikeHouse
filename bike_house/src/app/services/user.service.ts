@@ -36,5 +36,18 @@ export class UsersService {
     getUsers():Observable<any[]>{
         return this.http.get<any[]>(this.apiUrl);
     }
+    OrderAccessory(idU:number|undefined,idA:string,QuantityO:Number):Observable<any>|null{
+        if (idU != undefined){
+            const params = { UserId:String(idU), AccessoryId:idA ,Quantity:QuantityO};
+            return this.http.post<any[]>(this.apiUrl+"/OrderAccessory",params);
+        }
+        else{
+            return null;
+        }
+    }
+
+    deleteUser(idU:number):Observable<any>{
+        return this.http.delete<any[]>(this.apiUrl+"/"+idU)
+    }
 
 }

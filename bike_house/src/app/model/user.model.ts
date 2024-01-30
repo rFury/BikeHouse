@@ -7,4 +7,5 @@ export class UserModel {
     UserBalance?: Number;
     UserPassword?: string;
     ordered_bikes:String[]=[];
+    ordered_accessories:String[]=[];
 }

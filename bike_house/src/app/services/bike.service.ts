@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BikeListing } from '../model/bike.model';
-import { bikeType } from '../model/type.model';
 import {Bike} from '../model/MotorBike.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -10,9 +8,6 @@ import { Observable } from 'rxjs';
 export class bikeService {
   private apiUrl = "http://127.0.0.1:8000/Bikes";
 
-  bikeListings!: BikeListing[];
-  bikeType!: bikeType[];
-  bikeBought!:BikeListing[];
 
   constructor(private http: HttpClient) {}
 
@@ -46,24 +41,5 @@ export class bikeService {
     return this.http.get<Bike[]>(this.apiUrl+"/BikesIds", { params });
   }
 
-  getBikeListings() {
-    return this.bikeListings;
-  }
-  getBikeBoughtListings() {
-    return this.bikeBought;
-  }
-  getNbBikes(): number {
-    return this.bikeListings.length;
-  }
-
-  getAVGpriceBike(): number {
-    const totalPrices = this.bikeListings.reduce((acc, bike) => acc + bike.price, 0);
-    const averagePrice = totalPrices / this.bikeListings.length;
-    return isNaN(averagePrice) ? 0 : +averagePrice.toFixed(3);
-  }
- 
-  getNbBikeTypes() : number{
-    return this.bikeListings.length;
-  }
 
 }

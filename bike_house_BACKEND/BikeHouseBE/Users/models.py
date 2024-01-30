@@ -5,7 +5,7 @@ class User(models.Model):
     UserId = models.AutoField(primary_key=True)
     UserName = models.CharField(max_length=255)
     UserEmail = models.EmailField(max_length=255,unique=True)
-    UserNumber = models.IntegerField()
+    UserNumber = models.IntegerField(unique=True)
     UserAdress = models.CharField(max_length=255)
     UserBalance = models.DecimalField(max_digits=10, decimal_places=3,blank=True)
     UserPassword = models.CharField(max_length=255)

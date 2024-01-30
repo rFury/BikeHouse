@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInComponent {
+  erreur : boolean = false;
   user:UserModel= new UserModel();
   pw!:string;
   C_pw!:string;
@@ -41,19 +42,37 @@ export class SignInComponent {
         }
       }
     }
+
+    verifData(){
+      if(!this.user.UserAdress || !this.user.UserNumber ||!this.user.UserEmail || !this.user.UserName )
+      {
+        alert('Please fill all fields ! ')
+        return false;
+      }
+      if(Number(this.user.UserNumber)<9999999){
+        alert('Po=hone number must be greater than 8 digits')
+        return false;
+      }
+      return true;
+    }
+
+
     CreateUser(){
-      this.user.UserBalance = 0;
-      this.user.UserPassword=this.C_pw;
-      console.log(this.user);
-      this.UserServ.AddUser(this.user).subscribe(
-        (response) => {
-          console.log('Successfully added User:', response);
-          this.route.navigate(['connect']);
-        },
-        (error) => {
-          console.error('Error adding User:', error);
-        }
-      );
+      if(this.verifData()){
+        this.user.UserBalance = 100000;
+        this.user.UserPassword=this.C_pw;
+        console.log(this.user);
+        this.UserServ.AddUser(this.user).subscribe(
+          (response) => {
+            console.log('Successfully added User:', response);
+            this.route.navigate(['connect']);
+          },
+          (error) => {
+            this.erreur=true;
+            console.error('Error adding User:', error);
+          }
+        );
+      }
     }
     ngOnInit() {
       console.log(this.Verif());

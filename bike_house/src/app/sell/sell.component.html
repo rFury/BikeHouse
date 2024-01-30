@@ -5,7 +5,7 @@
         <h2>List Your Bike for Sale</h2>
         <form>
             <label for="bike_name">Bike Name:</label>
-            <input [(ngModel)]="newBike.Name" type="text" id="bike_name" name="bike_name" required>
+            <input [(ngModel)]="newBike.Name" type="text" id="bike_name" name="bike_name" >
 
             <label for="img">Bike Image:</label>
             <input type="file" name="Image" id="img" [(ngModel)]="newBike.Picture_File_Name" required>
@@ -14,7 +14,7 @@
             <textarea [(ngModel)]="newBike.Description" id="description" name="description" rows="4" required></textarea>
 
             <label for="price">Price:</label>
-            <input [(ngModel)]="newBike.Price" type="text" id="price" name="price" required>
+            <input [(ngModel)]="newBike.Price" type="number" id="price" name="price" required>
 
             <label for="bike_type">Bike Type:</label>
             <select name="Type" id="bike_type" [(ngModel)]="newBike.Type"  required>
@@ -28,6 +28,8 @@
                 <option value="Naked Bike">Naked Bike</option>
 
               </select>
+
+              <label for="bike_type">Bike Type:</label>
             
             <label for="year">Manufacturing Year:</label>
             <input [(ngModel)]="newBike.Year" type="number" id="year" name="year" required>

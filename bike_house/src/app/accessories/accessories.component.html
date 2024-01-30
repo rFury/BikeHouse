@@ -1,0 +1,209 @@
+<br>
+<br>
+<br>
+<div class="ALL">
+  <div class="Filters">
+    <form>
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingInput" placeholder="Bike Name" name="Name" [(ngModel)]="X.Name">
+      <label for="floatingInput">Accessory Name :</label>
+    </div>
+    <div class="form-floating">
+      <input type="text" class="form-control" id="floatingTextInput" placeholder="Production Year" name="Year" [(ngModel)]="X.Year">
+      <label for="floatingTextInput">Production Year :</label>
+    </div>
+    <div class="form-floating">
+      <input type="number" class="form-control" id="floatingTextInput" placeholder="Production Year" name="Price" [(ngModel)]="X.Price" >
+      <label for="floatingTextInput">Accessory Pirce :</label>
+    </div>
+    <div class="form-floating">
+      <select name="Type" id="floatingSelect" class="form-select" aria-label="Floating label select example" [(ngModel)]="X.Type" >
+        <option value="" selected disabled>Choose Type :</option>
+        <option value="Safety Gear">Safety Gear</option>
+        <option value="Luggage Gear">Luggage Gear</option>
+        <option value="Track Gear">Track Gear</option>
+      </select>
+      <label for="floatingSelect">Accessory Type :</label>
+    </div>
+    <div  class="form-floating">
+      <select name="Brand" id="Brand" class="form-select" [(ngModel)]="X.Brand" >
+        <option value="" selected disabled>Choose Brand :</option>
+        <option value="AGV">AGV</option>
+        <option value="FOX">FOX</option>
+        <option value="Shoei">Shoei</option>
+        <option value="Scorpion">Scorpion</option>
+        <option value="Shark">Shark</option>
+
+      </select>
+      <label for="Brand">Accessory Brand :</label>
+  </div>
+  <div class="form-floating" *ngIf="AuthServ.roleCourant=='ADMIN'">
+    <select name="Brand" id="Brand" class="form-select" [(ngModel)]="X.Status" >
+      <option value="" selected disabled>Choose Status :</option>
+      <option value="On Sale">On Sale</option>
+      <option value="Out Of Stock">Out Of Stock</option>
+      <option value="Coming Soon">Coming Soon</option>
+
+    </select>
+    <label for="Brand">Accessory Status :</label>
+  </div>
+  <div class="buttons">
+    <button class="btn sign-in" type="reset">Reset</button>
+    <button class="btn sign-in" type="submit" (click)="SearchAccessory()" >Search</button>
+  </div>
+  </form>
+  </div>
+  
+  <div class="Bikes">
+      <ng-template #myModalE>
+        <div class="modal-header" style="display: flex;justify-content: space-between;">
+          <h4 class="modal-title" style="color:red;">Not enough Money !! </h4>
+          <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()" style="border-radius: 5px;background-color:#333;border:0px">
+            <span aria-hidden="true" style="color: white;">&times;</span>
+          </button>
+        </div>
+      </ng-template>
+    <div class="empty" *ngIf="Accessories.length==0">
+      <h1>No Results</h1>
+    </div>
+    <section class="featured-bikes" *ngIf="Accessories.length>0">
+      <div *ngFor="let item of Accessories" class="bike-card">
+          <img src="{{item.Picture_File_Name}}" alt="Mountain Bike">
+          <h4>{{item.Name}}</h4>
+          <p style="font-size: small;"> {{item.Type}}</p><p style="font-size: small;">{{item.Brand}}:{{item.Name}} {{item.Year}} </p>
+          <span class="price">${{item.Price}}</span>
+          <div class="buttons-container">
+            <ng-container *ngIf="this.AuthServ.roleCourant=='AGENT'">
+            <button class="details-button" type="button" (click)="openModal(myModal,id.value)">About</button>
+            <button class="order-button" *ngIf="item.Status=='On Sale'" (click)="openOrder(myModalOrder,id.value)" >Order</button>
+            <button class="order-button-sold" *ngIf="item.Status=='Out Of Stock'" disabled>{{item.Status}}</button>
+            <button class="order-button-coming" *ngIf="item.Status=='Coming Soon'" disabled>{{item.Status}}</button>
+          </ng-container>
+          <ng-container *ngIf="this.AuthServ.roleCourant=='ADMIN'">
+            <button class="details-button" type="button" (click)="openModal(myModal,id.value)">Update</button>
+            <button class="order-button" (click)="deleteAccessory(id.value)">Delete</button>
+          </ng-container>
+          </div>
+          <input type="number" name="Id" value="{{item.AccessoryId}}" [readonly]="readonly" hidden #id>
+      </div>
+    </section>
+  </div>
+</div>
+<ng-template #myModal>
+  <div class="modal-header">
+    <h4 class="modal-title">Accessory Details :</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form >
+    <div class="mb-3 row">
+      <div class="col-sm-10">
+        <img src="{{SearchedAccessory.Picture_File_Name}}" alt="{{SearchedAccessory.Name}}" class="Detail-img">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Product:</label>
+      <div class="col-sm-10">
+        <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="{{SearchedAccessory.Name}}" name="name" [(ngModel)]="SearchedAccessory.Name" required>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Brand:</label>
+      <div class="col-sm-10">
+        <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="{{SearchedAccessory.Brand}}" name="brand" [(ngModel)]="SearchedAccessory.Brand" required>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Type:</label>
+      <div class="col-sm-10">
+        <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="{{SearchedAccessory.Type}}" name="type" [(ngModel)]="SearchedAccessory.Type" required>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Year:</label>
+      <div class="col-sm-10">
+        <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="{{SearchedAccessory.Year}}" name="year" [(ngModel)]="SearchedAccessory.Year" required>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Price:</label>
+      <div class="col-sm-10">
+        <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="{{SearchedAccessory.Price}}" name="price" [(ngModel)]="SearchedAccessory.Price" required>
+      </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Quantity:</label>
+        <div class="col-sm-10">
+          <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="{{SearchedAccessory.Quantity}}" name="quantity" [(ngModel)]="SearchedAccessory.Quantity" required>
+        </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Status:</label>
+      <div class="col-sm-10">
+        <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="{{SearchedAccessory.Status}}" name="Status" [(ngModel)]="SearchedAccessory.Status" required>
+      </div>
+  </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">More:</label>
+      <div class="col-sm-10">
+        <textarea class="form-control custom-textarea"  name="Description" id="staticEmail" cols="30" rows="5" [(ngModel)]="SearchedAccessory.Description" required>{{SearchedAccessory.Description}}</textarea>
+      </div>
+    </div>
+    <button type="submit" class="order-button-coming" *ngIf="AuthServ.roleCourant=='ADMIN'" (click)="updateAccessory()">Update</button>
+  </form>
+  </div>
+</ng-template>
+<ng-template #myModalOrder>
+  <div class="modal-header">
+    <h4 class="modal-title">Accessory Order :</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form >
+      <ng-container *ngIf="erreur==true">
+        <div class="mb-3 row">
+          <div class="col-sm-10" style="display: flex;justify-content:center;">
+            <h2 style="color: red;" >NOT ENOUGH MONEY ! </h2>
+          </div>
+        </div>
+      </ng-container>
+    <div class="mb-3 row">
+      <div class="col-sm-10">
+        <img src="{{SearchedAccessory.Picture_File_Name}}" alt="{{SearchedAccessory.Name}}" class="Detail-img">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Product:</label>
+      <div class="col-sm-10">
+        <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="{{SearchedAccessory.NameOfProduct}} {{SearchedAccessory.Name}} {{SearchedAccessory.Year}}" name="name" [(ngModel)]="SearchedAccessory.Name" required>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Brand:</label>
+      <div class="col-sm-10">
+        <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="{{SearchedAccessory.Brand}}" name="brand" [(ngModel)]="SearchedAccessory.Brand" required>
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="staticEmail" class="col-sm-2 col-form-label">Price :</label>
+      <div class="col-sm-10">
+        <input type="text" [readonly]="readonly" class="form-control-plaintext" id="staticEmail" value="$ {{Price}}" name="price" [(ngModel)]="Price" required style="color: red;">
+      </div>
+    </div>
+    <div class="mb-3 row">
+      <label for="customRange1" class="form-label">Quantity To Order : {{Quantity}}</label>
+      <div class="col-sm-10">
+        <input type="range" class="form-range" id="customRange1" [defaultValue]="1" min="1" max="{{SearchedAccessory.Quantity}}" step="1" name="Quantity" [(ngModel)]="Quantity" (change)="changePrice()">
+      </div>
+    </div>
+    <button type="submit" class="order-button-coming" *ngIf="AuthServ.roleCourant=='AGENT'" (click)="buyAccessory()" [disabled]="order">Order</button>
+  </form>
+  </div>
+</ng-template>
+<br>
+<br>
+<br>

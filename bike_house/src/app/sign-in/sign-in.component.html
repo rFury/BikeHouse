@@ -3,12 +3,15 @@
 <br>    
 <section class="create-account-form">
     <h2>Create Account</h2>
+    <ng-container *ngIf="this.erreur">
+        <h4 style="color: red;">Email Already in use !</h4>
+    </ng-container>
     <form>
         <label for="new-username">Username:</label>
         <input [(ngModel)]="user.UserName" type="text" id="new-username" name="new-username" required>
 
         <label for="email">Email:</label>
-        <input [(ngModel)]="user.UserEmail" type="email" id="email" name="email" required>
+        <input [(ngModel)]="user.UserEmail" type="email" id="email" name="email" required (change)="this.erreur=false">
 
         <label for="pn">Phone Number:</label>
         <input [(ngModel)]="user.UserNumber" type="number" id="pn" name="number" required>

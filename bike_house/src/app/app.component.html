@@ -6,7 +6,8 @@
         <div>
         <ul>
             <li><a routerLink="content-main">Home</a></li>
-            <li><a routerLink="/bike">Bikes</a></li>
+            <li><a routerLink="/bike">Bike</a></li>
+            <li><a routerLink="/Accessories">Accessory</a></li>
             <li *ngIf="authServ.roleCourant=='ADMIN'"><a routerLink="/users">Users</a></li>
             <li *ngIf="authServ.roleCourant=='ADMIN'"><a routerLink="/Dashboard">Dashboard</a></li>
             <li><a href="">About Us</a></li>
@@ -14,8 +15,8 @@
         </ul>
     </div>
         <div class="nav-buttons">
-            <a routerLink="/sell" class="btn sell-bike" *ngIf="authServ.roleCourant=='ADMIN'">Insert Bike</a>
-            <a routerLink="/search-bike" class="btn buy-bike" *ngIf="authServ.isConnected">Search Bike</a>
+            <a routerLink="/sell" class="btn sell-bike" *ngIf="authServ.roleCourant=='ADMIN'">+Bike</a>
+            <a routerLink="/sell-accessory" class="btn sell-bike" *ngIf="authServ.roleCourant=='ADMIN'">+Accessory</a>
             <a routerLink="account" class="btn sign-in" *ngIf="authServ.isConnected" >{{authServ.userCourant}}</a>
             <a (click)="disconnect()" class="btn sign-in" *ngIf="authServ.isConnected" >Log Out</a>
             <a routerLink="/connect" class="btn sign-in" *ngIf="authServ.isConnected==false" >Sign In</a>
@@ -26,9 +27,3 @@
 </header>
 <router-outlet></router-outlet>
 <br>
-<footer>
-    <div class="footer-content">
-            <h1>Bike World</h1>
-        <p>&copy; 2023 Bike World</p>
-    </div>
-</footer>

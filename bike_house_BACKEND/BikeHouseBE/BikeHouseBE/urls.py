@@ -23,4 +23,8 @@ urlpatterns = [
     path('Bikes/BikesIds',bikes_views.getBikesByIds),
     path('Accessories',accessory_views.Get_Post_Accessory.as_view()),
     path('Accessories/<int:pk>',accessory_views.Get_Put_Delete_Accessory.as_view()),
+    path('Accessories/FindAccessories',accessory_views.FindAccessories),
+    path('Accessories/AccessoriesIds',accessory_views.getAccessotriesByIds),
+    path('Users/OrderAccessory',users_views.MakeOrderAccessory),
+    path('Orders/FindOrdersAccessory',users_views.FindOrdersA),
 ]

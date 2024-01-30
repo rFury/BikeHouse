@@ -44,29 +44,59 @@
     <input type="text" class="form-control" placeholder="Server" aria-label="Server" [value]="User.UserNumber"  readonly>
   </div>
   <br>
-  ORDERS
-  <span aria-hidden="true"><hr></span>
-  <div class="Orders">
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">Order Date</th>
-          <th scope="col">Order Number</th>
-          <th scope="col">Bike</th>
-          <th scope="col">Details</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let item of Orders">
-          <th scope="row">{{item.DateOfOrder}}</th>
-          <td>{{item.OrderNumber}}</td>
-          <td>{{this.getBikeById(item.Bike)[0].Brand}} {{this.getBikeById(item.Bike)[0].Name}}</td>
-          <td><button class="details-button" (click)="openModal(myModal,id.value)">...</button></td>
-          <input type="number" name="Id" value="{{item.Bike}}" readonly hidden #id>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <ng-container *ngIf="User.ordered_bikes.length>0">
+    ORDERS
+    <span aria-hidden="true"><hr></span>
+    <div class="Orders">
+      <h2>Bikes Orederd</h2>
+      <br>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Order Date</th>
+            <th scope="col">Order Number</th>
+            <th scope="col">Bike</th>
+            <th scope="col">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of Orders">
+            <th scope="row">{{item.DateOfOrder}}</th>
+            <td>{{item.OrderNumber}}</td>
+            <td>{{this.getBikeById(item.Bike)[0].Brand}} {{this.getBikeById(item.Bike)[0].Name}}</td>
+            <td><button class="details-button" (click)="openModal(myModal,id.value)">...</button></td>
+            <input type="number" name="Id" value="{{item.Bike}}" readonly hidden #id>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="User.ordered_accessories.length>0">
+    <div class="Orders">
+      <h2>Accessories Ordered</h2>
+      <br>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Order Date</th>
+            <th scope="col">Order Number</th>
+            <th scope="col">Accessory</th>
+            <th scope="col" >Quantity</th>
+            <th scope="col">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of OrdersAccessory">
+            <th scope="row">{{item.DateOfOrder}}</th>
+            <td>{{item.OrderNumber}}</td>
+            <td>{{getAccessoryById(item.Accessory)[0].Brand}} {{getAccessoryById(item.Accessory)[0].Name}}</td>
+            <td>{{item.QuantityOrdered}}</td>
+            <td><button class="details-button" (click)="openModalOrder(myModalOrder,item.Accessory,item.QuantityOrdered)">...</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
   <ng-template #myModal>
     <div class="modal-header">
       <h4 class="modal-title">Bike Details :</h4>
@@ -119,4 +149,66 @@
   
     </div>
   </ng-template>
+
+
+  <ng-template #myModalOrder>
+    <div class="modal-header">
+      <h4 class="modal-title">Accessory Details :</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form >
+      <div class="mb-3 row">
+        <div class="col-sm-10">
+          <img src="{{SearchedAccessory.Picture_File_Name}}" alt="{{SearchedAccessory.Name}}" class="Detail-img">
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Product:</label>
+        <div class="col-sm-10">
+          <input type="text" [readonly]="true" class="form-control-plaintext" id="staticEmail" value="{{SearchedAccessory.Name}}" name="name" required>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Brand:</label>
+        <div class="col-sm-10">
+          <input type="text" [readonly]="true" class="form-control-plaintext" id="staticEmail" value="{{SearchedAccessory.Brand}} {{SearchedAccessory.NameOfProduct}}" name="brand"  required>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Type:</label>
+        <div class="col-sm-10">
+          <input type="text" [readonly]="true" class="form-control-plaintext" id="staticEmail" value="{{SearchedAccessory.Type}}" name="type"  required>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Year:</label>
+        <div class="col-sm-10">
+          <input type="text" [readonly]="true" class="form-control-plaintext" id="staticEmail" value="{{SearchedAccessory.Year}}" name="year"  required>
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">Price:</label>
+        <div class="col-sm-10">
+          <input type="text" [readonly]="true" class="form-control-plaintext" id="staticEmail" value="$ {{SearchedAccessory.Price}}" name="price"  required>
+        </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="staticEmail" class="col-sm-2 col-form-label">Quantity:</label>
+          <div class="col-sm-10">
+            <input type="text" [readonly]="true" class="form-control-plaintext" id="staticEmail" value="$ {{SearchedAccessory.Price}}" name="quantity"  required>
+          </div>
+      </div>
+      <div class="mb-3 row">
+        <label for="staticEmail" class="col-sm-2 col-form-label">More:</label>
+        <div class="col-sm-10">
+          <textarea class="form-control custom-textarea"  name="Description" id="staticEmail" cols="30" rows="5"  required>{{SearchedAccessory.Description}}</textarea>
+        </div>
+      </div>
+    </form>
+    </div>
+  </ng-template>
+  
 <br>

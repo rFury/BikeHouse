@@ -45,7 +45,7 @@ def FindBikes(request):
     if is_not_empty(BikeYear):
         filters['Year'] = BikeYear
     if is_not_empty(BikePrice):
-        filters['Price__gte'] = BikePrice
+        filters['Price__lte'] = BikePrice
     if is_not_empty(BikeStatus):
         filters['Status'] = BikeStatus
         

@@ -3,64 +3,95 @@
 <br>
 <br>
 <div>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Adress</th>
-            <th scope="col">Phone Number</th>
-            <th scope="col">Balance</th>
-            <th scope="col">Password</th>
-            <th scope="col">Orders</th>
-        </tr>
-        </thead>
-        <tbody class="table-group-divider">
-        <tr *ngFor="let item of Users">
-            <th scope="row">{{item.UserId}}</th>
-            <td>{{item.UserName}}</td>
-            <td>{{item.UserEmail}}</td>
-            <td>{{item.UserAdress}}</td>
-            <td>{{item.UserNumber}}</td>
-            <td>{{item.UserBalance}}</td>
-            <td>{{item.UserPassword}}</td>
-            <td *ngIf="item.ordered_bikes.length==0" style="color: red;">No Orders !</td>
-            <td *ngIf="item.ordered_bikes.length>0">
-                <button class="details-button" (click)="openModal(myModal,item.ordered_bikes)">...</button>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <ng-template #myModal>
-        <div class="modal-header">
+  <table class="table">
+      <thead>
+          <tr>
+              <th scope="col">Id</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Adress</th>
+              <th scope="col">Phone Number</th>
+              <th scope="col">Balance</th>
+              <th scope="col">Password</th>
+              <th scope="col">Orders</th>
+              <th scope="col">Delete</th>
+          </tr>
+      </thead>
+      <tbody class="table-group-divider">
+          <tr *ngFor="let item of Users">
+              <th scope="row">{{item.UserId}}</th>
+              <td>{{item.UserName}}</td>
+              <td>{{item.UserEmail}}</td>
+              <td>{{item.UserAdress}}</td>
+              <td>{{item.UserNumber}}</td>
+              <td>${{item.UserBalance}}</td>
+              <td>{{item.UserPassword}}</td>
+              <td>
+                  <ng-container *ngIf="item.ordered_bikes.length > 0 || item.ordered_accessories.length > 0; else noOrders">
+                      <button class="details-button" (click)="openModal(myModal,item.ordered_bikes,item.ordered_accessories)">
+                          ...
+                      </button>
+                  </ng-container>
+                  <ng-template #noOrders>
+                      <span style="color: red;">No Orders !</span>
+                  </ng-template>
+              </td>
+              <td style="width: 9%;"><a (click)="delete(item.UserId)"><img src="../../assets/Img/delete.png" alt="delete" width="40%"></a></td>
+          </tr>
+      </tbody>
+  </table>
+  <ng-template #myModal>
+      <div class="modal-header">
           <h4 class="modal-title">User Orders :</h4>
           <button type="button" class="close" aria-label="Close" (click)="modalRef.hide()">
-            <span aria-hidden="true">&times;</span>
+              <span aria-hidden="true">&times;</span>
           </button>
-        </div>
-        <div class="modal-body">
-            <div class="Orders">
-                <table class="table table-hover">
+      </div>
+      <div class="modal-body" *ngIf="Orders.length > 0">
+          <div class="Orders">
+              <table class="table table-hover">
                   <thead>
-                    <tr>
-                      <th scope="col">Order Date</th>
-                      <th scope="col">Order Number</th>
-                      <th scope="col">Bike</th>
-                      <th scope="col">User Id</th>
-                    </tr>
+                      <tr>
+                          <th scope="col">Order Date</th>
+                          <th scope="col">Order Number</th>
+                          <th scope="col">Bike</th>
+                          <th scope="col">User Id</th>
+                      </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let item of Orders">
-                      <th scope="row">{{item.DateOfOrder}}</th>
-                      <td>{{item.OrderNumber}}</td>
-                      <td>{{item.Bike}}</td>
-                      <td>{{item.UserId}}</td>
-                    </tr>
+                      <tr *ngFor="let item of Orders">
+                          <th scope="row">{{item.DateOfOrder}}</th>
+                          <td>{{item.OrderNumber}}</td>
+                          <td>{{item.Bike}}</td>
+                          <td>{{item.UserId}}</td>
+                      </tr>
                   </tbody>
-                </table>
-              </div>
-      
-        </div>
-      </ng-template>
+              </table>
+          </div>
+      </div>
+      <div class="modal-body" *ngIf="OrdersA.length > 0">
+          <div class="Orders">
+              <table class="table table-hover">
+                  <thead>
+                      <tr>
+                          <th scope="col">Order Date</th>
+                          <th scope="col">Order Number</th>
+                          <th scope="col">Accessory</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">User Id</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let item of OrdersA">
+                          <th scope="row">{{item.DateOfOrder}}</th>
+                          <td>{{item.OrderNumber}}</td>
+                          <td>{{item.Accessory}}</td>
+                          <td>{{item.QuantityOrdered}}</td>
+                          <td>{{item.UserId}}</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </ng-template>
 </div>

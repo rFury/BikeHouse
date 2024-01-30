@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient , HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Orders } from '../model/Order.model';
+import { OrderAccessory } from '../model/OrderAccessory.model';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,5 +21,10 @@ export class OrdersService {
     const params = {Orders: orderIds.map(String)}
     return this.http.get<Orders[]>(this.apiUrl+"/FindOrders", { params });
   }
+  getUserOrdersAccessory(orderIds: String[]): Observable<OrderAccessory[]> {
+    const params = {Orders: orderIds.map(String)}
+    return this.http.get<OrderAccessory[]>(this.apiUrl+"/FindOrdersAccessory", { params });
+  }
+
 
 }

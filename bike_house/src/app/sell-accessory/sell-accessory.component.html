@@ -1,0 +1,45 @@
+<br>
+<br>
+<br>
+    <section class="bike-listing-form">
+        <h2>List Your Accessory for Sale</h2>
+        <form>
+            <label for="bike_name">Accessory Name:</label>
+            <input [(ngModel)]="newAccessory.Name" type="text" id="bike_name" name="bike_name" required>
+
+            <label for="bike_name">Accessory Product Type:</label>
+            <input [(ngModel)]="newAccessory.NameOfProduct" type="text" id="bike_name" name="bike_name" required>
+
+            <label for="img">Accessory Image:</label>
+            <input type="file" name="Image" id="img" [(ngModel)]="newAccessory.Picture_File_Name" required>
+
+            <label for="description">Description:</label>
+            <textarea [(ngModel)]="newAccessory.Description" id="description" name="description" rows="4" required></textarea>
+
+            <label for="price">Price:</label>
+            <input [(ngModel)]="newAccessory.Price" type="number" id="price" name="price" required>
+
+            <label for="bike_type">Accessory Type:</label>
+            <select name="Type" id="bike_type" [(ngModel)]="newAccessory.Type"  required>
+                <option value="" selected disabled>Choose Type :</option>
+                <option value="Safety Gear">Safety Gear</option>
+                <option value="Luggage Gear">Luggage Gear</option>
+                <option value="Track Gear">Track Gear</option>
+
+              </select>
+            
+            <label for="year">Manufacturing Year:</label>
+            <input [(ngModel)]="newAccessory.Year" type="number" id="year" name="year" required>
+
+            <label for="location">Brand:</label>
+            <input [(ngModel)]="newAccessory.Brand" type="text" id="location" name="location" required>
+            <label for="Quantity">Quantity:</label>
+            <input type="number" [(ngModel)]="newAccessory.Quantity" id="Quantity" name="Quantity" required>
+            <br>
+            <br>
+            <button (click)="ajouterAccessory()" type="submit" >Submit Listing</button>
+        </form>
+    </section>
+
+    <br>
+    <br>
