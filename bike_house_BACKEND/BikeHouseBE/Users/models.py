@@ -25,3 +25,4 @@ class AccessoriesOrdered(models.Model):
     Accessory = models.ForeignKey(Accessory, on_delete=models.CASCADE)
     QuantityOrdered = models.IntegerField(null=False)
     DateOfOrder = models.DateField(auto_now_add=True)
+    

@@ -27,4 +27,8 @@ urlpatterns = [
     path('Accessories/AccessoriesIds',accessory_views.getAccessotriesByIds),
     path('Users/OrderAccessory',users_views.MakeOrderAccessory),
     path('Orders/FindOrdersAccessory',users_views.FindOrdersA),
+    path('Orders/Accessories',users_views.Get_Post_OrdersA.as_view()),
+    path('Orders/Accessories/<int:pk>',users_views.Get_Put_Delete_OrdersA.as_view()),
+    path('Orders/SearchByDate',users_views.searchOrdersByDate),
+
 ]

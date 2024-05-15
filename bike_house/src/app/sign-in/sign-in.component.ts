@@ -50,7 +50,7 @@ export class SignInComponent {
         return false;
       }
       if(Number(this.user.UserNumber)<9999999){
-        alert('Po=hone number must be greater than 8 digits')
+        alert('Phone number must be greater than 8 digits')
         return false;
       }
       return true;
@@ -62,16 +62,26 @@ export class SignInComponent {
         this.user.UserBalance = 100000;
         this.user.UserPassword=this.C_pw;
         console.log(this.user);
-        this.UserServ.AddUser(this.user).subscribe(
-          (response) => {
-            console.log('Successfully added User:', response);
-            this.route.navigate(['connect']);
+        if(this.user.UserEmail){
+        this.UserServ.findUser(this.user.UserEmail).subscribe(
+          (response)=>{
+            console.log(response,"ALREADY IN USE EMAIL");
+            this.erreur = true;
           },
-          (error) => {
-            this.erreur=true;
-            console.error('Error adding User:', error);
+          (error)=>{
+            this.UserServ.AddUser(this.user).subscribe(
+              (response) => {
+                console.log('Successfully added User:', response);
+                this.route.navigate(['connect']);
+              },
+              (error) => {
+                console.error('Error adding User:', error.getMessage());
+              }
+            );
           }
-        );
+        )
+        
+        }
       }
     }
     ngOnInit() {

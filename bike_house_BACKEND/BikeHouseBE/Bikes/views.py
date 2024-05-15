@@ -45,7 +45,7 @@ def FindBikes(request):
     if is_not_empty(BikeYear):
         filters['Year'] = BikeYear
     if is_not_empty(BikePrice):
-        filters['Price__lte'] = BikePrice
+        filters['Price__gte'] = BikePrice
     if is_not_empty(BikeStatus):
         filters['Status'] = BikeStatus
         
@@ -77,3 +77,39 @@ def getBikesByIds(request):
             return Response("NotFound", status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response("Bike IDs not provided"+str(ids), status=status.HTTP_400_BAD_REQUEST)
+    
+    
+@api_view(['GET'])
+def searchByDate(request):
+    def is_not_empty(value):
+        return value is not None and value != "undefined" and value != "null"
+
+    BikeName = request.query_params.get('BikeName', '')
+    BikeYear = request.query_params.get('BikeYear', None)
+    BikeBrand = request.query_params.get('BikeBrand', '')
+    BikePrice = request.query_params.get('BikePrice', None)
+    BikeType = request.query_params.get('BikeType', '')
+    BikeStatus = request.query_params.get('BikeStatus','')
+
+    filters = {}
+    if is_not_empty(BikeName):
+        filters['Name__icontains'] = BikeName
+    if is_not_empty(BikeBrand):
+        filters['Brand__icontains'] = BikeBrand
+    if is_not_empty(BikeType):
+        filters['Type__icontains'] = BikeType
+    if is_not_empty(BikeYear):
+        filters['Year'] = BikeYear
+    if is_not_empty(BikePrice):
+        filters['Price__gte'] = BikePrice
+    if is_not_empty(BikeStatus):
+        filters['Status'] = BikeStatus
+        
+        
+    BikeX = Bike.objects.filter(**filters).order_by('-Price')
+    serializer = BikeSerializer(BikeX, many=True)
+    
+    if BikeX.exists():
+        return Response(serializer.data)
+    else:
+        return Response("NotFound", status=status.HTTP_400_BAD_REQUEST)

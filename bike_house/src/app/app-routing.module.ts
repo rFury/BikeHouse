@@ -21,13 +21,13 @@ const routes: Routes = [
 {path: "sell", component : SellComponent,canActivate:[AccessGuard]},
 {path:"search-bike",component:SearchBikeComponent},
 {path:"connect",component:ConnectComponent},
-{path:"Dashboard",component:DashboardComponent,canActivate:[AccessGuard]},
+{path:"Dashboard",component:DashboardComponent},
 {path:"account",component:AccountComponent},
 {path:"users",component:UsersComponent,canActivate:[AccessGuard]},
 {path:"forbidden",component:ForbiddenComponent},
 {path:"Admin",component:AdminComponent},
 {path:"Accessories",component:AccessoriesComponent},
-{path:"sell-accessory",component:SellAccessoryComponent},
+{path:"sell-accessory",component:SellAccessoryComponent,canActivate:[AccessGuard]},
 ];
 
 @NgModule({

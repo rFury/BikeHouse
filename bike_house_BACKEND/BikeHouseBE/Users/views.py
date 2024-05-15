@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.utils.dateparse import parse_date
 from .models import User, BikesOrdered ,AccessoriesOrdered
 from Bikes.models import Bike
 from Accessories.models import Accessory
@@ -7,7 +8,7 @@ from Bikes.serializer import BikeSerializer
 from rest_framework import status,filters,mixins,generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializer import UserSerializer , BikesOrderedSerializer ,AccessoriesOrderedSerializer
+from .serializer import UserSerializer , BikesOrderedSerializer ,AccessoriesOrderedSerializer, CombinedOrderSerializer
 
 
 #User Side
@@ -101,7 +102,7 @@ def MakeOrderAccessory(request):
         return Response("NOT FOUND",status=status.HTTP_400_BAD_REQUEST)
                 
     
-#Order Side
+#Order bike Side
 class Get_Post_Orders(mixins.CreateModelMixin,mixins.ListModelMixin,generics.GenericAPIView):
     queryset = BikesOrdered.objects.all()
     serializer_class = BikesOrderedSerializer
@@ -119,6 +120,26 @@ class Get_Put_Delete_Orders(mixins.RetrieveModelMixin,mixins.DestroyModelMixin,m
         return self.update(request)
     def delete(self,request,pk):
         return self.destroy(request)
+    
+#Order accessory side 
+class Get_Post_OrdersA(mixins.CreateModelMixin,mixins.ListModelMixin,generics.GenericAPIView):
+    queryset = AccessoriesOrdered.objects.all()
+    serializer_class = AccessoriesOrderedSerializer
+    def get(self,request):
+        return self.list(request)
+    def post(self,request):
+        return self.create(request)
+
+class Get_Put_Delete_OrdersA(mixins.RetrieveModelMixin,mixins.DestroyModelMixin,mixins.UpdateModelMixin,generics.GenericAPIView):
+    queryset = AccessoriesOrdered.objects.all()
+    serializer_class = AccessoriesOrderedSerializer
+    def get(self,request,pk):
+        return self.retrieve(request)
+    def put(self,request,pk):
+        return self.update(request)
+    def delete(self,request,pk):
+        return self.destroy(request)
+
     
 @api_view(['GET'])
 def FindOrders(request):
@@ -163,3 +184,50 @@ def FindOrdersA(request):
         return Response("Order IDs not provided"+str(order_ids),status=status.HTTP_404_NOT_FOUND)
     
 
+@api_view(['GET'])
+def searchOrdersByDate(request):
+    class Order():
+        def __init__(self, OrderNumber, UserId, ProductID, Quantity, DateOfOrder, which):
+            self.OrderNumber = OrderNumber
+            self.UserId = UserId
+            self.ProductID = ProductID
+            self.Quantity = Quantity
+            self.DateOfOrder = DateOfOrder
+            self.which = which
+    def is_not_empty(value):
+        return value is not None and value != "undefined" and value != "null" and value != ""
+
+    date = request.query_params.get('Date', '')
+    if is_not_empty(date):
+        parsed_date = parse_date(date)
+        if parsed_date is not None:
+            BikeX = BikesOrdered.objects.filter(DateOfOrder=parsed_date).order_by('-DateOfOrder')
+            AccessoryX = AccessoriesOrdered.objects.filter(DateOfOrder=parsed_date).order_by('-DateOfOrder')
+        else:
+            return Response("Invalid date format", status=status.HTTP_400_BAD_REQUEST)
+    else :
+        BikeX = BikesOrdered.objects.all()
+        AccessoryX = AccessoriesOrdered.objects.all()
+
+    bike_orders = [Order(order.OrderNumber, order.UserId.UserId, order.Bike.BikeId, 1, order.DateOfOrder, 'Bike') for order in BikeX]
+    accessory_orders = [Order(order.OrderNumber, order.UserId.UserId, order.Accessory.AccessoryId, order.QuantityOrdered, order.DateOfOrder, 'Accessory') for order in AccessoryX]
+
+    combined_orders = bike_orders + accessory_orders
+    
+    combined_orders_data = [
+        {
+            'OrderNumber': order.OrderNumber,
+            'UserId': order.UserId,
+            'ProductID': order.ProductID,
+            'Quantity': order.Quantity,
+            'DateOfOrder': order.DateOfOrder,
+            'which': order.which
+        }
+        for order in combined_orders
+    ]
+
+    
+    if BikeX.exists() or AccessoryX.exists():
+        return Response(combined_orders_data)
+    else:
+        return Response("NotFound", status=status.HTTP_400_BAD_REQUEST)

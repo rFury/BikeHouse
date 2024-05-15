@@ -1,69 +1,64 @@
-/* Dashboard container */
-.dashboard {
-    padding: 20px;
-  }
-  
-  /* Dashboard title */
-  .dashboard-title {
-    text-align: center;
-    color: white;
-  }
-  
-  /* Grid container */
-  .grid-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-    margin-top: 20px;
-  }
-  
-  /* Grid item */
-  .grid-item {
-    display: flex;
-    align-items: center;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-  
-  /* Grid item icons */
-  .grid-icon {
-    height: 50px;
-    width: 50px;
-    margin: 0 20px;
-  }
-  
-  /* Grid item content */
-  .grid-content {
-    flex: 1;
-  }
-  
-  /* Grid item categories */
-  .grid-category {
-    margin: 0;
-    font-size: 1.2rem;
-    color: white;
-  }
-  
-  /* Grid item values */
-  .grid-value {
-    margin: 0;
-    font-size: 2rem;
-    color: white;
-    margin-top: 5px;
-  }
-  
-  /* Red background for Bikes */
-  .bg-danger {
-    background-color: #ff4136;
-  }
-  
-  /* Orange background for Utilisateurs */
-  .bg-warning {
-    background-color: #ff851b;
-  }
-  
-  /* Green background for Average bike pricing */
-  .bg-success {
-    background-color: #2ecc40;
-  }
-  
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+.header {
+  background-color: #333;
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+  border-radius: 8px 8px 0 0;
+}
+.mini-metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  margin-top: 20px;
+}
+.mini-metric {
+  background-color: #fff;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+}
+.mini-metric h3 {
+  margin: 0;
+  color: #333;
+}
+.metric-number {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #d9534f; /* Red color */
+}
+.metric-label {
+  font-size: 14px;
+  color: #555;
+}
+.tables {
+  margin-top: 20px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+th {
+  background-color: #333;
+  color: #fff;
+}
